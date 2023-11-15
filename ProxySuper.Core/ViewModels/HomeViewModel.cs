@@ -53,6 +53,10 @@ namespace ProxySuper.Core.ViewModels
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
+            if (!Directory.Exists("Data"))
+            {
+                Directory.CreateDirectory("Data");
+            }
             File.WriteAllText("Data/Record.json", json);
         }
 
@@ -103,6 +107,8 @@ namespace ProxySuper.Core.ViewModels
         public IMvxCommand AddMTProtoGoCommand => new MvxAsyncCommand(AddMTProtoGoRecord);
 
         public IMvxCommand AddBrookCommand => new MvxAsyncCommand(AddBrookRecord);
+
+        public IMvxCommand AddHysteriaCommand => new MvxAsyncCommand(AddHysteriaRecord);
 
         public IMvxCommand RemoveCommand => new MvxAsyncCommand<string>(DeleteRecord);
 
@@ -200,6 +206,21 @@ namespace ProxySuper.Core.ViewModels
             SaveToJson();
         }
 
+        public async Task AddHysteriaRecord()
+        {
+            Record record = new Record();
+            record.Id = Utils.GetTickID();
+            record.Host = new Host();
+            record.HysteriaSettings = new HysteriaSettings();
+
+            var result = await _navigationService.Navigate<HysteriaEditorViewModel, Record, Record>(record);
+            if (result == null) return;
+
+            Records.Add(result);
+
+            SaveToJson();
+        }
+
 
         public async Task EditRecord(string id)
         {
@@ -255,6 +276,14 @@ namespace ProxySuper.Core.ViewModels
                 record.Host = result.Host;
                 record.MTProtoGoSettings = result.MTProtoGoSettings;
             }
+            if (record.Type == ProjectType.Hysteria)
+            {
+                result = await _navigationService.Navigate<HysteriaEditorViewModel, Record, Record>(record);
+                if (result == null) return;
+
+                record.Host = result.Host;
+                record.HysteriaSettings = result.HysteriaSettings;
+            }
 
             SaveToJson();
         }
@@ -303,6 +332,10 @@ namespace ProxySuper.Core.ViewModels
             {
                 await _navigationService.Navigate<MTProtoGoConfigViewModel, MTProtoGoSettings>(record.MTProtoGoSettings);
             }
+            if (record.Type == ProjectType.Hysteria)
+            {
+                await _navigationService.Navigate<HysteriaConfigViewModel, HysteriaSettings>(record.HysteriaSettings);
+            }
         }
 
         public async Task GoToInstall(string id)
@@ -334,6 +367,10 @@ namespace ProxySuper.Core.ViewModels
             if (record.Type == ProjectType.MTProtoGo)
             {
                 await _navigationService.Navigate<MTProtoGoInstallViewModel, Record>(record);
+            }
+            if (record.Type == ProjectType.Hysteria)
+            {
+                await _navigationService.Navigate<HysteriaInstallViewModel, Record>(record);
             }
 
             SaveToJson();

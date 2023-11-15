@@ -1,9 +1,12 @@
 # ProxySU
 V2ray, Xray, Trojan, NaiveProxy, Trojan-Go, MTProto Go, Brook,BBR install tools for windows。  
 V2ray，Xray, Trojan，NaiveProxy, Trojan-Go, MTProto Go, Brook 及相关插件。支持纯ipv6主机一键安装代理。  
-BBR一键开启（仅支持CentOS8/Debian9/10/Ubuntu18.04及以上）,支持语言:English、简体中文、正体（繁体）中文。
+BBR一键开启（仅支持CentOS8/Debian9/10/Ubuntu18.04及以上）,支持语言:English、简体中文、正体（繁体）中文，波斯语。  
 
 编译环境Visual Studio 2019  使用WPF界面。可一键安装 V2ray/Xray, Shadowsocks, Trojan, Trojan-Go, NaiveProxy, MTProto Go, Brook 后续还会再添加其他。  
+
+零基础用户，强烈建议看一下[Xray官网](https://xtls.github.io)的[小小白白话文-自建教程](https://xtls.github.io/document/level-0)。  
+更多相关资源与工具请看本项目Wiki[资源和工具](https://github.com/proxysu/ProxySU/wiki/%E8%B5%84%E6%BA%90%E5%92%8C%E5%B7%A5%E5%85%B7)。  
 
 ![photo_2021-05-31_17-23-29](https://user-images.githubusercontent.com/73510229/120171754-f46ffd00-c234-11eb-8105-4e6a941a65bb.jpg)
 ![photo_2021-05-31_17-24-29](https://user-images.githubusercontent.com/73510229/120171966-297c4f80-c235-11eb-921a-2ddebad5dc58.jpg)
@@ -15,8 +18,9 @@ BBR一键开启（仅支持CentOS8/Debian9/10/Ubuntu18.04及以上）,支持语�
 #### 再次声明：  
 ##### ProxySU本着技术中立的原则，没有任何立场，也不持任何见解，更不涉及任何政治因素。ProxySU仅仅主张人的知情权，这是一项天赋人权，也是各国宪法所保障的最基本人权。知情权包含对同一事物正负两方面评价的知情，至于相信哪个，由人自己选择。正如李文亮医生临终所言：一个正常的社会是不应该只有一种声音的。如果真的存在对某一事物只有一种声音的评价，无论其评价是正面还是负面，都是要慎重对待，并需要重新审视的。  
 
-##### 上传自有证书 #####
-需要将crt和key文件打包成zip，在安装界面选择“上传自有证书”
+
+##### 代理版本的选择  
+多数情况下，ProxySU安装代理工具的Latest版。  
 
 ##### 支持的VPS系统为：  
 * CentOS 7/8   
@@ -58,7 +62,14 @@ ProxySU调用[SSH.NET](https://github.com/sshnet/SSH.NET)库登录远程主机�
 * RSA in OpenSSL PEM and ssh.com format  
 * DSA in OpenSSL PEM and ssh.com format  
 * ECDSA 256/384/521 in OpenSSL PEM format  
-* ED25519 in OpenSSH key format  
+* ECDSA 256/384/521, ED25519 and RSA in OpenSSH key format  
+可以使用以下密码方法之一对私钥进行加密：  
+* DES-EDE3-CBC  
+* DES-EDE3-CFB  
+* DES-CBC  
+* AES-128-CBC  
+* AES-192-CBC  
+* AES-256-CBC  
 见官方说明：  
 https://github.com/sshnet/SSH.NET#public-key-authentication  
 如果当前拥有的密钥格式不是以上几种，可以下载[puttygen](https://www.puttygen.com/)工具，将其转换成上面的格式。  
@@ -79,6 +90,9 @@ Let's Encrypt证书申请频率的限制
 同一IP地址，在短时间内过于频繁的申请证书，也会被限制，此时更换域名也无法申请成功，只能等待一段时间，或者更换Ip.  
 (网友分享)  
 
+##### 上传自有证书 #####
+需要将crt和key文件打包成zip，在安装界面选择“上传自有证书”
+
 ##### 关于卸载功能  
 有网友要求，可以卸载其他方法安装的，经过考虑，还是不这样做。1，容易引起争议。2，不容易卸载干净，在用ProxySU安装时可能还会出错。所以第一次使用ProxySU建议使用全新系统，如果以前安装过代理程序，请尽可能将系统重装一下，可以减少很多安装的错误和冲突。  
 
@@ -87,8 +101,6 @@ Let's Encrypt证书申请频率的限制
 [(GPL-V3)](https://raw.githubusercontent.com/proxysu/windows/master/LICENSE)
 
 ## 运行文件下载
-* Beta版(随代码更新，新添加功能可能有bug或不完善)  
-[下载](https://github.com/proxysu/windows/raw/master/ProxySU/bin/Beta/Beta.zip)
 * 正式版（正式发布的版本，新功能完善后发布）  
 [下载](https://github.com/proxysu/windows/releases)
 
@@ -106,23 +118,12 @@ Microsoft [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-fram
 
 ## 程序使用问题反馈  
 * Telegram群组 https://t.me/proxysuissues   
-* Telegram频道 https://t.me/proxysu_channel 
 * 在线提问  https://github.com/proxysu/windows/issues  
 
 在使用遇到问题时，请先看一下[常见问题集锦](https://github.com/proxysu/windows/wiki/CommonError)，如果还不能解决，可以到以上平台询问，个人精力有限，尽力解答。
 
 
-## 云主机  
-下面连接购买，作者可获得推广佣金，谢谢支持！  
-以下是国内优化线路、比较实惠的vps。  
-CloudPower的cn2 gia比较便宜，每天数量有限，作者已稳定用过半年。
 
-| 商家       | 线路          | 配置      | 流量   | 价格      | 连接                                                           |
-| ---------- | ------------- | --------- | ------ | --------- | -------------------------------------------------------------- |
-| CloudPower | CN2 GIA       | 1 核 1G   | 500GB  | 36.99/年  | [链接](https://cloudpowerall.com/aff.php?aff=3225&pid=150)     |
-| CloudPower | AS9929        | 1 核 1G   | 500GB  | 29.99/年  | [链接](https://cloudpowerall.com/aff.php?aff=3225&pid=149)       |
-| cloudcone  | CN2 GIA       | 1 核 512M | 500GB  | $40/年    | [链接](https://app.cloudcone.com/compute/1024/create?ref=7021) |
-| 搬瓦工     | CN2 GT        | 1 核 1G   | 1000GB | $49.99/年 | [链接](https://bandwagonhost.com/aff.php?aff=66053&pid=57)     |
 
 
 
