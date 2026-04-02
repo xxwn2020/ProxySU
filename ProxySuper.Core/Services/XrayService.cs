@@ -87,7 +87,12 @@ namespace ProxySuper.Core.Services
                     Progress.Step = "安装成功";
                     Progress.Desc = string.Empty;
 
-                    if (!Settings.WithTLS)
+                    if (!Settings.WithTLS && (Settings.Types.Contains(XrayType.VLESS_RAW_XTLS) 
+                                              || Settings.Types.Contains(XrayType.VLESS_WS) 
+                                              || Settings.Types.Contains(XrayType.VLESS_gRPC) 
+                                              || Settings.Types.Contains(XrayType.Trojan_TCP)
+                                              )
+                         )
                     {
                         Progress.Step = "安装成功，请上传您的 TLS 证书。";
                     }
@@ -268,7 +273,7 @@ namespace ProxySuper.Core.Services
         }
 
 
-        #region 似有方法
+        #region 私有方法
 
         private void DoUploadCert(object sender, CancelEventArgs e)
         {
@@ -292,7 +297,7 @@ namespace ProxySuper.Core.Services
                         var oldFileName = $"ssl_{DateTime.Now.Ticks}";
                         RunCmd($"mv /usr/local/etc/xray/ssl /usr/local/etc/xray/{oldFileName}");
 
-                        RunCmd("mkdir /usr/local/etc/xray/ssl");
+                        RunCmd("mkdir -p /usr/local/etc/xray/ssl");
                         UploadFile(stream, "/usr/local/etc/xray/ssl/ssl.zip");
                         RunCmd("unzip /usr/local/etc/xray/ssl/ssl.zip -d /usr/local/etc/xray/ssl");
                     }
@@ -343,7 +348,7 @@ namespace ProxySuper.Core.Services
                     Progress.Desc = "创建网站目录";
                     if (!FileExists("/usr/share/caddy"))
                     {
-                        RunCmd("mkdir /usr/share/caddy");
+                        RunCmd("mkdir -p /usr/share/caddy");
                     }
                     RunCmd("rm -rf /usr/share/caddy/*");
                     Progress.Percentage = 40;
@@ -423,7 +428,6 @@ namespace ProxySuper.Core.Services
             }
             WriteToFile(configJson, "/etc/caddy/Caddyfile");
         }
-
 
         private void UninstallXray()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using MvvmCross.Platforms.Wpf.Presenters.Attributes;
 using MvvmCross.Platforms.Wpf.Views;
 using ProxySuper.Core.Models.Projects;
 using ProxySuper.Core.ViewModels;
@@ -7,18 +8,33 @@ using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ProxySuper.WPF.Views
 {
-    /// <summary>
-    /// XrayInfoView.xaml 的交互逻辑
-    /// </summary>
+    [MvxWindowPresentation]
     public partial class XrayConfigView : MvxWindow
     {
         public XrayConfigView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+
+            for (int i = 0; i < TabCtrl.Items.Count; i++)
+            {
+                var tabItem = TabCtrl.Items[i] as TabItem;
+
+                if (Settings.Types.Contains((XrayType)tabItem.Tag))
+                {
+                    TabCtrl.SelectedIndex = i;
+                    break;
+                }
+            }
         }
 
         public XraySettings Settings
@@ -29,14 +45,12 @@ namespace ProxySuper.WPF.Views
             }
         }
 
-
-
         private void BuildQrCode(object sender, SelectionChangedEventArgs e)
         {
             var tabControl = e.Source as TabControl;
             var item = (tabControl.SelectedItem as TabItem);
             if (item == null) return;
-            var type = (RayType)item.Tag;
+            var type = (XrayType)item.Tag;
             BuildQrCode(type);
         }
 
@@ -55,45 +69,33 @@ namespace ProxySuper.WPF.Views
             }
         }
 
-        private void BuildQrCode(RayType type)
+        private void BuildQrCode(XrayType type)
         {
             string shareLink = string.Empty;
             switch (type)
             {
-                case RayType.VLESS_TCP_XTLS:
-                    shareLink = Settings.VLESS_TCP_XTLS_ShareLink;
+                case XrayType.VLESS_XTLS_RAW_REALITY:
+                    shareLink = Settings.VLESS_RAW_XTLS_REALITY_ShareLink;
                     break;
-                case RayType.VLESS_TCP:
-                    shareLink = Settings.VLESS_TCP_ShareLink;
+                case XrayType.VLESS_RAW_XTLS:
+                    shareLink = Settings.VLESS_RAW_XTLS_ShareLink;
                     break;
-                case RayType.VLESS_WS:
+                case XrayType.VLESS_XHTTP:
+                    shareLink = Settings.VLESS_XHTTP_ShareLink;
+                    break;
+                case XrayType.VLESS_WS:
                     shareLink = Settings.VLESS_WS_ShareLink;
                     break;
-                case RayType.VLESS_H2:
-                    break;
-                case RayType.VLESS_KCP:
-                    shareLink = Settings.VLESS_KCP_ShareLink;
-                    break;
-                case RayType.VLESS_gRPC:
+                case XrayType.VLESS_gRPC:
                     shareLink = Settings.VLESS_gRPC_ShareLink;
                     break;
-                case RayType.VMESS_TCP:
-                    shareLink = Settings.VMESS_TCP_ShareLink;
-                    break;
-                case RayType.VMESS_WS:
-                    shareLink = Settings.VMESS_WS_ShareLink;
-                    break;
-                case RayType.VMESS_H2:
-                    break;
-                case RayType.VMESS_KCP:
+                case XrayType.VMESS_KCP:
                     shareLink = Settings.VMESS_KCP_ShareLink;
                     break;
-                case RayType.Trojan_TCP:
+                case XrayType.Trojan_TCP:
                     shareLink = Settings.Trojan_TCP_ShareLink;
                     break;
-                case RayType.Trojan_WS:
-                    break;
-                case RayType.ShadowsocksAEAD:
+                case XrayType.ShadowsocksAEAD:
                     shareLink = Settings.ShadowSocksShareLink;
                     break;
                 default:
@@ -101,21 +103,22 @@ namespace ProxySuper.WPF.Views
             }
 
 
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(shareLink, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
+            var qrGenerator = new QRCodeGenerator();
+            var qrCodeData = qrGenerator.CreateQrCode(shareLink, QRCodeGenerator.ECCLevel.Q);
+            var qrCode = new QRCode(qrCodeData);
 
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
-            MemoryStream ms = new MemoryStream();
+            var qrCodeImage = qrCode.GetGraphic(20);
+            var ms = new MemoryStream();
             qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             byte[] bytes = ms.GetBuffer();
             ms.Close();
-            BitmapImage image = new BitmapImage();
+            var image = new BitmapImage();
             image.BeginInit();
             image.StreamSource = new MemoryStream(bytes);
             image.EndInit();
             QrImage.Source = image;
             QrImage.Tag = type.ToString();
         }
+    
     }
 }

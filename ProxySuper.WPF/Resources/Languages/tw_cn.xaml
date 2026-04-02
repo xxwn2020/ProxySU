@@ -22,12 +22,15 @@
     <sys:String x:Key="MainMenuLanguageEn">English</sys:String>
     <sys:String x:Key="MainMenuLanguageCn">中文</sys:String>
     <sys:String x:Key="MainMenuLanguageTw">正體</sys:String>
+    <sys:String x:Key="MainMenuLanguageFr">فارسی</sys:String>
+
     <sys:String x:Key="MainMenuHelper">幫助</sys:String>
     <sys:String x:Key="MainMenuHelperGithub">Github</sys:String>
     <sys:String x:Key="MainMenuHelperUseRoot">啓用Root賬戶</sys:String>
     <sys:String x:Key="MainMenuHelperCertQuestion">證書問題</sys:String>
     <sys:String x:Key="MainMenuHelperPrivateKey">私鑰問題</sys:String>
-
+    <sys:String x:Key="MainMenuHelperResourcesAndTutorials">相關資源與教程</sys:String>
+    <sys:String x:Key="MainMenuHelperFreeAndPaid">免費and付費翻牆資源</sys:String>
 
     <!--Main DataGrid-->
     <sys:String x:Key="MainDataGridColumnTag">名稱</sys:String>
@@ -50,9 +53,12 @@
     <sys:String x:Key="HostPassword">密碼</sys:String>
     <sys:String x:Key="HostPort">端口</sys:String>
     <sys:String x:Key="HostSecretType">登録驗證</sys:String>
-    <sys:String x:Key="HostUploadSecretKey">上傳Key</sys:String>
+    <sys:String x:Key="HostUploadSecretKey">載入私鑰</sys:String>
     <sys:String x:Key="HostSertTypePassword">密碼</sys:String>
     <sys:String x:Key="HostSertTypePrivateKey">私鑰</sys:String>
+    <sys:String x:Key="HostSertTypePrivateKeyPassPhrase">私鑰密碼</sys:String>
+
+    <sys:String x:Key="TextBoxContentTipsNoneBlank">若無,則留空</sys:String>
 
     <sys:String x:Key="ProxyGroupName">代理</sys:String>
     <sys:String x:Key="ProxyAddress">IP/地址</sys:String>
@@ -64,15 +70,23 @@
     <sys:String x:Key="ProxyTypeHttp">Http</sys:String>
     <sys:String x:Key="ProxyTypeSocks5">Socks5</sys:String>
 
+    <!--editor-->
+    <sys:String x:Key="EditorProxyType" xml:space="preserve">節點類型</sys:String>
+    <sys:String x:Key="EditorProxyParams" xml:space="preserve">節點參數</sys:String>
+
     <!--Xray-->
-    <sys:String x:Key="VlessXtlsDesc" xml:space="preserve">VLESS Over TCP With XTLS&#x0a;性能數倍，首選方式。</sys:String>
-    <sys:String x:Key="VlessTcpDesc" xml:space="preserve">VLESS over TCP with TLS&#x0a;仍推薦XTLS。</sys:String>
-    <sys:String x:Key="VlessWsDesc" xml:space="preserve">VLESS over WS with TLS&#x0a;推薦，支持CDN。</sys:String>
-    <sys:String x:Key="VlessKcpDesc" xml:space="preserve">VLESS mKCP&#x0a;遊戲推薦，延遲低，免域名。</sys:String>
-    <sys:String x:Key="VmessWsDesc" xml:space="preserve">VMESS over WS with TLS&#x0a;推薦，支持CDN。</sys:String>
-    <sys:String x:Key="VmessKcpDesc" xml:space="preserve">VMESS mKCP&#x0a;遊戲推薦，延遲低，免域名。</sys:String>
-    <sys:String x:Key="SSDesc" xml:space="preserve">ShadowSocks&#x0a;SS，支持udp，免域名。</sys:String>
-    <sys:String x:Key="TrojanDesc" xml:space="preserve">Trojan over TCP with TLS&#x0a;Trojan。</sys:String>
+    <sys:String x:Key="VlessXtlsRealityDesc" xml:space="preserve">VLESS XTLS(RAW) REALITY</sys:String>
+    <sys:String x:Key="VlessXtlsDesc" xml:space="preserve">VLESS XTLS(RAW)</sys:String>
+    <sys:String x:Key="VlessTcpDesc" xml:space="preserve">VLESS RAW(TLS)</sys:String>
+    <sys:String x:Key="VlessWsDesc" xml:space="preserve">VLESS WS</sys:String>
+    <sys:String x:Key="VlessRpcDesc" xml:space="preserve">VLESS gRPC</sys:String>
+    <sys:String x:Key="VlessKcpDesc" xml:space="preserve">VLESS mKCP</sys:String>
+    <sys:String x:Key="VlessQuicDesc" xml:space="preserve">VLESS QUIC</sys:String>
+    <sys:String x:Key="VmessWsDesc" xml:space="preserve">VMESS WS</sys:String>
+    <sys:String x:Key="VmessKcpDesc" xml:space="preserve">VMESS mKCP</sys:String>
+    <sys:String x:Key="VmessQuicDesc" xml:space="preserve">VMESS QUIC</sys:String>
+    <sys:String x:Key="SSDesc" xml:space="preserve">ShadowSocks</sys:String>
+    <sys:String x:Key="TrojanDesc" xml:space="preserve">Trojan</sys:String>
 
 
     <sys:String x:Key="XrayDomain">域名/IP</sys:String>
@@ -80,25 +94,40 @@
     <sys:String x:Key="XrayWithTLS">自動申請證書</sys:String>
     <sys:String x:Key="XrayWithTLSDesc">如上傳自有證書，則取消對勾。</sys:String>
     <sys:String x:Key="XrayUUID">UUID</sys:String>
+    <sys:String x:Key="Flow">流控 (客戶端)</sys:String>
+    <sys:String x:Key="UTLS">uTLS (客戶端)</sys:String>
     <sys:String x:Key="MultiUser">多用戶</sys:String>
     <sys:String x:Key="MultiUserHelp">多個UUID用“,”分隔</sys:String>
+    <sys:String x:Key="VLESS_XTLS_RAW_REALITY_spiderX_Path">REALITY spiderX</sys:String>
+    <sys:String x:Key="REALITY spiderX_Help">爬蟲初始路徑與參數</sys:String>
+    <sys:String x:Key="VlessXhttpPath">VLESS XHTTP路徑</sys:String>
     <sys:String x:Key="VlessWsPath">VLESS WS路徑</sys:String>
     <sys:String x:Key="VlessKcpSeed">VLESS KCP Seed</sys:String>
     <sys:String x:Key="VlessKcpType">VLESS KCP偽裝</sys:String>
     <sys:String x:Key="VlessKcpPort">VLESS KCP端口</sys:String>
+    <sys:String x:Key="VlessQuicKey">VLESS QUIC Key</sys:String>
+    <sys:String x:Key="VlessQuicPort">VLESS QUIC端口</sys:String>
+    <sys:String x:Key="VlessQuicSecurity">VLESS QUIC加密</sys:String>
+    <sys:String x:Key="VlessQuicType">VLESS QUIC僞裝</sys:String>
     <sys:String x:Key="VlessRPCName">gRPC路徑</sys:String>
     <sys:String x:Key="VlessRPCPort">gRPC端口</sys:String>
     <sys:String x:Key="VmessWsPath">VMESS WS路徑</sys:String>
     <sys:String x:Key="VmessKcpSeed">VMESS KCP Seed</sys:String>
     <sys:String x:Key="VmessKcpType">VMESS KCP偽裝</sys:String>
     <sys:String x:Key="VmessKcpPort">VMESS KCP端口</sys:String>
+    <sys:String x:Key="VmessQuicKey">VMESS QUIC Key</sys:String>
+    <sys:String x:Key="VmessQuicPort">VMESS QUIC端口</sys:String>
+    <sys:String x:Key="VmessQuicSecurity">VMESS QUIC加密</sys:String>
+    <sys:String x:Key="VmessQuicType">VMESS QUIC僞裝</sys:String>
     <sys:String x:Key="SSPassword">SS密碼</sys:String>
     <sys:String x:Key="SSMethods">SS加密方式</sys:String>
     <sys:String x:Key="SSPort">SS端口</sys:String>
     <sys:String x:Key="TrojanPassword">Trojan密碼</sys:String>
     <sys:String x:Key="TrojanPort">Trojan端口</sys:String>
-    <sys:String x:Key="XrayPort">xray端口</sys:String>
+    <sys:String x:Key="V2rayPort">V2ray端口</sys:String>
+    <sys:String x:Key="XrayPort">XRAY端口</sys:String>
     <sys:String x:Key="XrayPortDefault">默認端口443，不建議修改</sys:String>
+    <sys:String x:Key="MoreParameters">更多參數</sys:String>
 
     <!--xray installer-->
     <sys:String x:Key="XrayInstallerInstall">一鍵安裝</sys:String>
@@ -132,4 +161,21 @@
     <sys:String x:Key="MTProtoPort">端口</sys:String>
     <sys:String x:Key="MTProtoCleartext">加密前字符</sys:String>
     <sys:String x:Key="MTProtoSecretText">密鑰</sys:String>
+    
+    <!--Hysteria-->
+    <sys:String x:Key="HysteriaDomain">域名</sys:String>
+    <sys:String x:Key="HysteriaPort">端口</sys:String>
+    <sys:String x:Key="HysteriaPassword">密碼</sys:String>
+    <sys:String x:Key="HysteriaAutoCert">自動申請證書，如上傳自有證書，則取消對勾。</sys:String>
+    <sys:String x:Key="HysteriaEmail">郵箱</sys:String>
+    <sys:String x:Key="HysteriaEmailDirections">自動申請證書用，隨機生成，可更換為自己的信箱</sys:String>
+    <sys:String x:Key="HysteriaObfsEnable">使用混淆，混淆後是沒有特徵的UDP包,否則預設流量偽裝成HTTP3</sys:String>
+    <sys:String x:Key="HysteriaObfsPassword">混淆密碼</sys:String>
+    <sys:String x:Key="HysteriaBrutal">Brutal 壅塞控制演算法 (預設)</sys:String>
+    <sys:String x:Key="HysteriaUpMbps">上傳限速</sys:String>
+    <sys:String x:Key="HysteriaDownMbps">下載限速</sys:String>
+    <sys:String x:Key="HysteriaUpAndDownMbpsDirections">0 - 無限制(下同),此為服務端配置</sys:String>
+    <sys:String x:Key="HysteriaBBR">BBR 擁塞控制演算法</sys:String>
+    <sys:String x:Key="HysteriaDisguisedWebUrl">偽裝網站</sys:String>
+    <sys:String x:Key="HysteriaUpDisguisedWebsite">手動上傳靜態偽裝網站</sys:String>
 </ResourceDictionary>

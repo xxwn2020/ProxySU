@@ -9,6 +9,15 @@ namespace ProxySuper.Core.Models.Projects
 {
     public partial class V2raySettings : IProjectSettings
     {
+        public static List<string> DisguiseTypes = new List<string> {
+            "none",
+            "srtp",
+            "utp",
+            "wechat-video",
+            "dtls",
+            "wireguard",
+        };
+
         public V2raySettings()
         {
             WithTLS = true;
@@ -16,22 +25,32 @@ namespace ProxySuper.Core.Models.Projects
             var guid = Guid.NewGuid().ToString();
             Port = 443;
             VLESS_KCP_Port = 2001;
-            VLESS_gRPC_Port = 2002;
+            VLESS_QUIC_Port = 2002;
+            VLESS_gRPC_Port = 2003;
+
             VMESS_KCP_Port = 3001;
+            VMESS_QUIC_Port = 3002;
             ShadowSocksPort = 4001;
 
             UUID = guid;
-            Types = new List<RayType>();
+            Types = new List<V2RayType>();
 
             VLESS_WS_Path = "/" + Utils.RandomString(6);
             VLESS_KCP_Type = "none";
             VLESS_KCP_Seed = guid;
-            VLESS_gRPC_ServiceName = "/" + Utils.RandomString(7);
+            VLESS_QUIC_Key = "";
+            VLESS_QUIC_Type = "none";
+            VLESS_QUIC_Security = "none";
+            VLESS_QUIC_Type = "none";
+            VLESS_gRPC_ServiceName = Utils.RandomString(7);
 
             VMESS_WS_Path = "/" + Utils.RandomString(8);
             VMESS_TCP_Path = "/" + Utils.RandomString(9);
             VMESS_KCP_Seed = guid;
+            VMESS_QUIC_Key = "";
             VMESS_KCP_Type = "none";
+            VMESS_QUIC_Security = "none";
+            VMESS_QUIC_Type = "none";
 
             TrojanPassword = guid;
 
@@ -57,22 +76,32 @@ namespace ProxySuper.Core.Models.Projects
                 list.Add(80);
                 list.Add(Port);
 
-                if (Types.Contains(RayType.VLESS_KCP))
+                if (Types.Contains(V2RayType.VLESS_KCP))
                 {
                     list.Add(VLESS_KCP_Port);
                 }
 
-                if (Types.Contains(RayType.VMESS_KCP))
+                if (Types.Contains(V2RayType.VLESS_QUIC))
+                {
+                    list.Add(VLESS_QUIC_Port);
+                }
+
+                if (Types.Contains(V2RayType.VMESS_KCP))
                 {
                     list.Add(VMESS_KCP_Port);
                 }
 
-                if (Types.Contains(RayType.ShadowsocksAEAD))
+                if (Types.Contains(V2RayType.VMESS_QUIC))
+                {
+                    list.Add(VMESS_QUIC_Port);
+                }
+
+                if (Types.Contains(V2RayType.ShadowsocksAEAD))
                 {
                     list.Add(ShadowSocksPort);
                 }
 
-                if (Types.Contains(RayType.VLESS_gRPC))
+                if (Types.Contains(V2RayType.VLESS_gRPC))
                 {
                     list.Add(VLESS_gRPC_Port);
                 }
@@ -80,8 +109,6 @@ namespace ProxySuper.Core.Models.Projects
                 return list.Distinct().ToList();
             }
         }
-
-        //public ProjectType Type { get; set; } = ProjectType.Xray;
 
         /// <summary>
         /// 是否安装证书，
@@ -135,22 +162,22 @@ namespace ProxySuper.Core.Models.Projects
         /// <summary>
         /// 安装类型
         /// </summary>
-        public List<RayType> Types { get; set; } = new List<RayType>();
+        public List<V2RayType> Types { get; set; } = new List<V2RayType>();
 
         /// <summary>
         /// 根据xray类型获取路径
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public string GetPath(RayType type)
+        public string GetPath(V2RayType type)
         {
             switch (type)
             {
-                case RayType.VLESS_WS:
+                case V2RayType.VLESS_WS:
                     return VLESS_WS_Path;
-                case RayType.VMESS_TCP:
+                case V2RayType.VMESS_TCP:
                     return VMESS_TCP_Path;
-                case RayType.VMESS_WS:
+                case V2RayType.VMESS_WS:
                     return VMESS_WS_Path;
                 default:
                     return string.Empty;

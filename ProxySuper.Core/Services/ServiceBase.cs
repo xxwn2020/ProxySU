@@ -198,7 +198,7 @@ namespace ProxySuper.Core.Services
                 Progress.Desc = ($"本机IP({IPv6})");
                 if (IPv6 != domainIP)
                 {
-                    throw new Exception("域名解析地址与服务器IP不匹配！");
+                    //throw new Exception("域名解析地址与服务器IP不匹配！");
                 }
             }
             else
@@ -207,7 +207,7 @@ namespace ProxySuper.Core.Services
                 Progress.Desc = ($"域名IP({domainIP})");
                 if (IPv4 != domainIP)
                 {
-                    throw new Exception("域名解析地址与服务器IP不匹配！");
+                    //throw new Exception("域名解析地址与服务器IP不匹配！");
                 }
             }
         }
@@ -327,7 +327,7 @@ namespace ProxySuper.Core.Services
             var result = RunCmd("id -u");
             if (!result.Equals("0\n"))
             {
-                throw new Exception("ProxySU需要使用Root用户进行安装！");
+                throw new Exception("请使用Root权限账户登录！");
             }
         }
 
@@ -365,6 +365,9 @@ namespace ProxySuper.Core.Services
 
         public void InstallSystemTools()
         {
+            Progress.Desc = ("更新安装包");
+            RunUpdateCmd();
+
             Progress.Desc = ("安装sudo工具");
             InstallSoftware("sudo");
 
@@ -409,7 +412,7 @@ namespace ProxySuper.Core.Services
             string cmd;
 
             Progress.Desc = ("检测IPv4");
-            cmd = RunCmd(@"curl -s https://api.ip.sb/ip --ipv4 --max-time 8");
+            cmd = RunCmd(@"curl -4 ip.sb");
             IPv4 = cmd.TrimEnd('\r', '\n');
 
             Progress.Desc = ($"IPv4地址为{IPv4}");
@@ -420,7 +423,7 @@ namespace ProxySuper.Core.Services
             else
             {
                 Progress.Desc = ("检测IPv6");
-                cmd = RunCmd(@"curl -s https://api.ip.sb/ip --ipv6 --max-time 8");
+                cmd = RunCmd(@"curl -6 ip.sb");
                 IPv6 = cmd.TrimEnd('\r', '\n');
                 Progress.Desc = ($"IPv6地址为{IPv6}");
 
@@ -447,7 +450,7 @@ namespace ProxySuper.Core.Services
             }
 
             RunCmd($"wget -O caddy.tar.gz {url}");
-            RunCmd("mkdir /etc/caddy");
+            RunCmd("mkdir -p /etc/caddy");
             RunCmd("tar -zxvf caddy.tar.gz -C /etc/caddy");
             RunCmd("cp -rf /etc/caddy/caddy /usr/bin");
             WriteToFile(Caddy.DefaultCaddyFile, "/etc/caddy/Caddyfile");
@@ -455,7 +458,7 @@ namespace ProxySuper.Core.Services
             RunCmd("systemctl daemon-reload");
             RunCmd("systemctl enable caddy");
 
-            RunCmd("mkdir /usr/share/caddy");
+            RunCmd("mkdir -p /usr/share/caddy");
             RunCmd("chmod 775 /usr/share/caddy");
 
             if (!FileExists("/usr/bin/caddy"))
@@ -618,7 +621,9 @@ namespace ProxySuper.Core.Services
                 }
             }
 
-            return dns64List.Keys.ToList();
+            //return dns64List.Keys.ToList();
+            return dns64List.OrderBy(kv => kv.Value).Select(kv => kv.Key).ToList();
+
         }
 
         private bool CheckKernelVersionBBR(string kernelVer)
@@ -768,6 +773,22 @@ namespace ProxySuper.Core.Services
             }
         }
 
+        private void RunUpdateCmd()
+        {
+            if (CmdType == CmdType.Apt)
+            {
+                RunCmd($"apt update -y");
+            }
+            else if (CmdType == CmdType.Yum)
+            {
+                RunCmd($"yum update -y");
+            }
+            else
+            {
+                RunCmd($"dnf update -y");
+            }
+        }
+
 
         private ConnectionInfo CreateConnectionInfo()
         {
@@ -783,13 +804,13 @@ namespace ProxySuper.Core.Services
                 if (_host.SecretType == LoginSecretType.PrivateKey)
                 {
                     PrivateKeyFile keyFile;
-                    if (string.IsNullOrEmpty(_host.Password))
+                    if (string.IsNullOrEmpty(_host.PrivateKeyPassPhrase))
                     {
                         keyFile = new PrivateKeyFile(_host.PrivateKeyPath);
                     }
                     else
                     {
-                        keyFile = new PrivateKeyFile(_host.PrivateKeyPath, _host.Password);
+                        keyFile = new PrivateKeyFile(_host.PrivateKeyPath, _host.PrivateKeyPassPhrase);
                     }
                     authMethods.Add(new PrivateKeyAuthenticationMethod(_host.UserName, keyFile));
                 }
@@ -810,7 +831,8 @@ namespace ProxySuper.Core.Services
                     proxyType: _host.Proxy.Type,
                     proxyHost: _host.Proxy.Address,
                     proxyPort: _host.Proxy.Port,
-                    proxyUsername: _host.Proxy.UserName, proxyPassword: _host.Proxy.Password,
+                    proxyUsername: _host.Proxy.UserName,
+                    proxyPassword: _host.Proxy.Password,
                     authenticationMethods: authMethods.ToArray());
             }
             catch (Exception ex)

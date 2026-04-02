@@ -1,0 +1,68 @@
+﻿<views:MvxWindow x:Class="ProxySuper.WPF.Views.Hysteria.HysteriaConfigView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProxySuper.WPF.Views.Hysteria"
+        xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Hysteria配置" Height="500" Width="800">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical"  Grid.Row="0" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="地址(address)" Width="180" />
+                <TextBox Text="{Binding Domain}" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="端口(port)" Width="180" />
+                <TextBox Text="{Binding Port}" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="密码(password)" Width="180" />
+                <TextBox Text="{Binding Password}" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="混淆密码(obfs password)" Width="180" />
+                <TextBox Text="{Binding ObfsPassword}" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="跳跃端口范围" Width="180" />
+                <TextBox Text="" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="传输安全(tls)" Width="180" />
+                <TextBox Text="tls" IsReadOnly="True" Width="300" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="分享链接(ShareLink)" Width="180" />
+                <TextBox x:Name="HysteriaShareLink" Text="{Binding HysteriaShareLink,Mode=OneTime}" Width="300" IsReadOnly="True" />
+            </StackPanel>
+
+            <StackPanel  >
+                <Image Width="140" Height="140" x:Name="QrImage" Margin="0,10,0,10"/>
+                <Button Click="SaveImage" Width="100" Content="{DynamicResource SaveAs}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Margin="20" Grid.Row="0" Grid.Column="0">
+            <TextBox Height="360" Text="{Binding ClientYamlConfig, Mode=OneWay}" IsReadOnly="True" />
+        </StackPanel>
+
+        
+    </Grid>
+</views:MvxWindow>

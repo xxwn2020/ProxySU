@@ -16,7 +16,7 @@ namespace ProxySuper.Core.Models.Projects
         {
             get
             {
-                return ShareLink.Build(RayType.VMESS_WS, this);
+                return ShareLink.Build(V2RayType.VMESS_WS, this);
             }
         }
 
@@ -32,7 +32,7 @@ namespace ProxySuper.Core.Models.Projects
         {
             get
             {
-                return ShareLink.Build(RayType.VMESS_TCP, this);
+                return ShareLink.Build(V2RayType.VMESS_TCP, this);
             }
         }
 
@@ -58,7 +58,38 @@ namespace ProxySuper.Core.Models.Projects
         {
             get
             {
-                return ShareLink.Build(RayType.VMESS_KCP, this);
+                return ShareLink.Build(V2RayType.VMESS_KCP, this);
+            }
+        }
+
+        /// <summary>
+        /// vmess quic security
+        /// </summary>
+        public string VMESS_QUIC_Security { get; set; }
+
+        /// <summary>
+        /// vmess quic type
+        /// </summary>
+        public string VMESS_QUIC_Type { get; set; }
+
+        /// <summary>
+        /// vmess quic port
+        /// </summary>
+        public int VMESS_QUIC_Port { get; set; }
+
+        /// <summary>
+        /// vmess quic key
+        /// </summary>
+        public string VMESS_QUIC_Key { get; set; }
+
+        /// <summary>
+        /// vmess quic ShareLink
+        /// </summary>
+        public string VMESS_QUIC_ShareLink
+        {
+            get
+            {
+                return ShareLink.Build(V2RayType.VMESS_QUIC, this);
             }
         }
     }

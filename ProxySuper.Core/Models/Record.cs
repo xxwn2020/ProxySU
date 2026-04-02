@@ -36,7 +36,7 @@ namespace ProxySuper.Core.Models
         [JsonProperty("v2raySettings")]
         public V2raySettings V2raySettings { get; set; }
 
-        [JsonProperty("settings")]
+        [JsonProperty("xraySettings")]
         public XraySettings XraySettings { get; set; }
 
         [JsonProperty("trojanGoSettings")]
@@ -50,6 +50,9 @@ namespace ProxySuper.Core.Models
 
         [JsonProperty("mtProtoGoSettings")]
         public MTProtoGoSettings MTProtoGoSettings { get; set; }
+
+        [JsonProperty]
+        public HysteriaSettings HysteriaSettings { get; set; }
 
 
         [JsonIgnore]
@@ -66,6 +69,8 @@ namespace ProxySuper.Core.Models
                 if (NaiveProxySettings != null) return ProjectType.NaiveProxy;
 
                 if (MTProtoGoSettings != null) return ProjectType.MTProtoGo;
+
+                if (HysteriaSettings != null) return ProjectType.Hysteria2;
 
                 return ProjectType.Brook;
             }
@@ -106,7 +111,7 @@ namespace ProxySuper.Core.Models
                 StringBuilder strBuilder = new StringBuilder();
                 XraySettings.Types.ForEach(type =>
                 {
-                    var link = ShareLink.Build(type, XraySettings);
+                    var link = ShareLink.XrayBuild(type, XraySettings);
                     strBuilder.AppendLine(link);
                 });
                 return strBuilder.ToString();
